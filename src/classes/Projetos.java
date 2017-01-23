@@ -2,6 +2,9 @@ package classes;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 
 public class Projetos {
 	
@@ -16,6 +19,8 @@ public class Projetos {
 	private String status;
 	
 	private Boolean finalizado;
+	
+	private int diasParaPrazo;
 
 	public Projetos(LocalDate dataInicio, LocalTime horaInicio) {
 		this.dataInicio = dataInicio;
@@ -46,10 +51,30 @@ public class Projetos {
 		return status;
 	}
 	
+	public int getDiasParaPrazo() {
+		return diasParaPrazo;
+	}
+
+	public void setDiasParaPrazo(int diasParaPrazo) {
+		this.diasParaPrazo = diasParaPrazo;
+	}
+	
+	
 	//Definindo Status. Atrasado.
 	
 	//pensar em metodo para campo de estatus modificado, para modificar, finalizado, executivo
 	
+
+	//funcionando, Retorno em string 
+	//estudar http://blog.caelum.com.br/conheca-a-nova-api-de-datas-do-java-8/
+	public String DefinePrazo(){		
+		LocalDate prazoEngrega = this.dataInicio.plusDays(this.getDiasParaPrazo());
+		
+		DateTimeFormatter  fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");		
+		String dataFormatada = fmt.format(prazoEngrega);
+		
+		return dataFormatada;
+	}
 	
 
 
