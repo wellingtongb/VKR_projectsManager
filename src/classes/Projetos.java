@@ -4,22 +4,25 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 public class Projetos {
-	
+
 	private LocalDate dataInicio;
 	private LocalDate dataTermino;
-	
+
 	private LocalTime horaInicio;
 	private LocalTime horaTermino;
-	
+
 	private LocalDate prazoEntrega;
-	
+
 	private String status;
-	
+
+	//variaveis para controle na tabela com checkboxes
 	private Boolean finalizado;
-	
+	private Boolean visivel;
+
 	private int diasParaPrazo;
 
 	public Projetos(LocalDate dataInicio, LocalTime horaInicio) {
@@ -44,13 +47,13 @@ public class Projetos {
 	}
 
 	public LocalDate getPrazoEntrega() {
-		return prazoEntrega;
+		return this.dataInicio.plusDays(this.getDiasParaPrazo());
 	}
 
 	public String getStatus() {
 		return status;
 	}
-	
+
 	public int getDiasParaPrazo() {
 		return diasParaPrazo;
 	}
@@ -59,23 +62,51 @@ public class Projetos {
 		this.diasParaPrazo = diasParaPrazo;
 	}
 	
-	
-	//Definindo Status. Atrasado.
-	
-	//pensar em metodo para campo de estatus modificado, para modificar, finalizado, executivo
-	
+	public String FormataData(LocalDate data){
+		DateTimeFormatter fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+				.withLocale(new Locale("pt", "br"));
+		return data.format(fmt);
+	}
 
-	//funcionando, Retorno em string 
-	//estudar http://blog.caelum.com.br/conheca-a-nova-api-de-datas-do-java-8/
-	public String DefinePrazo(){		
+	// pensar em metodo para campo de estatus modificado, para modificar,
+	// finalizado, executivo
+
+	// funcionando, Retorno em string
+	// estudar http://blog.caelum.com.br/conheca-a-nova-api-de-datas-do-java-8/
+	public String DefinePrazo() {
 		LocalDate prazoEngrega = this.dataInicio.plusDays(this.getDiasParaPrazo());
-		
-		DateTimeFormatter  fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");		
-		String dataFormatada = fmt.format(prazoEngrega);
-		
-		return dataFormatada;
+
+		DateTimeFormatter fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+				.withLocale(new Locale("pt", "br"));
+		return prazoEngrega.format(fmt);
+	}
+
+	// Definindo Status. Atrasado Funcionando (retorno em string).
+	public String DefineStatus() {
+		String status;
+
+		LocalDate diaAtual = LocalDate.now();
+
+		// Calculando a diferença entre os dias e comparando com os dias de
+		// prazo
+		if (ChronoUnit.DAYS.between(this.getDataInicio(), diaAtual) > this.getDiasParaPrazo()) {
+			status = "Atrasado";
+		} else {
+			status = "Em dia";
+		}
+		return status;
 	}
 	
-
+	@Override
+	public String toString() {
+		//continuar daqui.. tentar criar a data formatada padrao pt br
+		/*DateTimeFormatter fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+				.withLocale(new Locale("pt", "br"));
+		LocalDate iniFormatada.fo;*/
+		
+		
+		return "Inicio: "+getDataInicio() + " Prazo: "+
+		getPrazoEntrega() + " Status: " + DefineStatus();
+	}
 
 }
