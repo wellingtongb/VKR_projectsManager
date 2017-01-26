@@ -68,11 +68,9 @@ public class Projetos {
 		return data.format(fmt);
 	}
 
-	// pensar em metodo para campo de estatus modificado, para modificar,
-	// finalizado, executivo
+	// pensar em metodo para campo de estatus modificado, para modificar, finalizado, executivo
 
 	// funcionando, Retorno em string
-	// estudar http://blog.caelum.com.br/conheca-a-nova-api-de-datas-do-java-8/
 	public String DefinePrazo() {
 		LocalDate prazoEngrega = this.dataInicio.plusDays(this.getDiasParaPrazo());
 
@@ -97,16 +95,12 @@ public class Projetos {
 		return status;
 	}
 	
+	//funcionando
 	@Override
-	public String toString() {
-		//continuar daqui.. tentar criar a data formatada padrao pt br
-		/*DateTimeFormatter fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
-				.withLocale(new Locale("pt", "br"));
-		LocalDate iniFormatada.fo;*/
+	public String toString() {		
 		
-		
-		return "Inicio: "+getDataInicio() + " Prazo: "+
-		getPrazoEntrega() + " Status: " + DefineStatus();
+		return "Inicio: "+FormataData(dataInicio) + " Prazo: "+
+		FormataData(getPrazoEntrega()) + " Status: " + DefineStatus();
 	}
 
 }

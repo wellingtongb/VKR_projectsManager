@@ -20,6 +20,8 @@ public class TestaProjetos {
 		System.out.println(p.DefinePrazo());
 
 		System.out.println(p.DefineStatus());
+		
+		System.out.println(p.FormataData(diaInicio));
 	}
 
 }
